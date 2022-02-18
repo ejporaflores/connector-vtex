@@ -1,0 +1,7 @@
+{
+  "id": "Id",
+  "productId": "ProductId",
+  "name": "ProductName",
+  "active": "IsActive",
+  "iva": "ProductSpecifications[FieldName=IVA].FieldValues"
+}

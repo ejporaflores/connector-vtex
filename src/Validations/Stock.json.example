@@ -1,0 +1,26 @@
+{
+    "$.sku": {
+        "conditions": [
+            {
+                "notnull": "dummy"
+            }
+        ],
+        "validationMessage": "RESPONSE {{value}}"
+    },
+    "$.stock": {
+        "conditions": [
+            {
+                "notnull": "dummy"
+            }
+        ],
+        "validationMessage": "RESPONSE {{value}}"
+    },
+    "$.warehouse": {
+        "conditions": [
+            {
+                "notnull": "dummy"
+            }
+        ],
+        "validationMessage": "RESPONSE {{value}}"
+    }
+}

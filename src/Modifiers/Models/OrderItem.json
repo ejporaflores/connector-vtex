@@ -1,0 +1,10 @@
+{
+    "id":               "$.id",
+    "sku":              "$.refId",
+    "price":            "$.price",
+    "name":             "$.name",
+    "selling_price":    "$.sellingPrice",
+    "discount":         "$.priceTags[?(@.name =~ /discount@price-/)].value",
+    "shipping":         "$.priceTags[?(@.name =~ /discount@shipping-/)].value",
+    "quantity":         "$.quantity"
+}

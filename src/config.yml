@@ -1,0 +1,168 @@
+---
+site: ''
+app_key: ''
+app_token: ''
+base_uri: 'https://{{site}}.vtexcommercestable.com.br'
+# mode: "feed" para usar el news feed - "pagination" (o cualquier otro valor) para usar paginación
+orders_mode: 'pagination'
+mongo_composite_keys: null
+subaccounts:
+  # key a tomar como seller en las integraciones
+  subaccount_key: "seller"
+  # valor a tomar como marketplace en el campo "seller" de las integraciones
+  marketplace_value: "marketplace"
+entities:
+
+  orders:
+    get:
+      method: "get"
+      url: "/api/oms/pvt/orders?f_Status={{status}}&orderBy=creationDate,desc&per_page=50&page={{page}}"
+      key: "order_id"
+      confirm: false
+      use_subaccounts: false
+      get_sku_data_by_id: false
+      modifiers:
+        models:
+          "$.list[*]": "Orders.json"
+        transformations:
+          "$.list[*]": "Orders.json"
+
+  feed:
+    config:
+      url: "/api/orders/feed/config"
+      method: "post"
+      use_subaccounts: false
+      modifiers:
+        payloads: "FeedConfig.json"
+      data:
+        # filter
+        type: "FromWorkflow"
+        status:
+          - "ready-for-handling"
+        expression: ""
+        disableSingleFire: "false"
+        # /filter
+        # queue
+        visibilityTimeoutInSeconds: 250
+        MessageRetentionPeriodInSeconds: 345600
+        # /queue
+    get:
+      method: "get"
+      url: "/api/orders/feed?maxlot=10"
+      # maxcalls: se llama al feed hasta que no traiga resultados o hasta alcanzar maxcalls
+      maxcalls: 15
+      key: "orderId"
+    confirm:
+      method: "post"
+      url: "/api/orders/feed"
+      modifiers:
+        payloads: "Feed.json"
+
+  order:
+    get:
+      method: "get"
+      key: "order_id"
+      url: "/api/oms/pvt/orders/{{order_id}}"
+      modifiers:
+        models:
+          "$.items[*]": "OrderItem.json"
+          "$": "Order.json"
+        transformations:
+          "$.items[*]": "OrderItem.json"
+          "$": "Order.json"
+
+  invoices:
+    create:
+      method: "post"
+      url: "/api/oms/pvt/orders/{{order_id}}/invoice"
+      key: "order_id"
+      use_subaccounts: false
+      status_ready: ready-for-handling
+      status_start_handling: start-handling
+      status_handling: handling
+      status_invoiced: invoiced
+      modifiers:
+        payloads: 'Invoice.json'
+
+    confirm:
+      method: "post"
+      url: "/api/oms/pvt/orders/{{order_id}}/start-handling"
+      key: "order_id"
+      modifiers:
+        payloads: 'Confirm.json'
+
+    get:
+      method: "get"
+      url: "/api/oms/pvt/orders?f_Status={{status}}&orderBy=creationDate,desc&per_page=50&page={{page}}&f_creationDate=creationDate:[{{dateFrom}} TO {{dateTo}}]"
+      key: "order_id"
+      use_subaccounts: false
+      get_sku_data_by_id: false
+      modifiers:
+        models:
+          "$.list[*]": "Orders.json"
+        transformations:
+          "$.list[*]": "Orders.json"
+
+  stock:
+    get:
+      method: "get"
+      url: "/api/logistics/pvt/inventory/skus/{{sku}}"
+      modifiers:
+        models: "Stock.json"
+    update:
+      method: "POST"
+      url: "/api/logistics/pvt/inventory/warehouseitems/setbalance"
+      key: "sku"
+      use_subaccounts: false
+      modifiers:
+        payloads: "Stock.json"
+        models: "Stock.json"
+
+  catalog:
+    get:
+      method: "get"
+      url: "/api/catalog_system/pvt/products/GetProductAndSkuIds?_from={{from}}&_to={{to}}"
+
+  sku:
+    get_by_ref:
+      method: "get"
+      url: "/api/catalog_system/pvt/sku/stockkeepingunitidbyrefid/{{ref_id}}"
+      modifiers:
+        models: "Skudata.json"
+    get_by_id:
+      method: "get"
+      url: "/api/catalog_system/pvt/sku/stockkeepingunitbyid/{{sku}}"
+      modifiers:
+        models: "Skudata.json"
+
+  price:
+    get:
+      method: "get"
+      url: "/api/pricing/pvt/price-sheet/{{sku}}"
+      modifiers:
+        models: "Price.json"
+    update:
+      method: "post"
+      url: "/api/pricing/pvt/price-sheet"
+      key: "sku"
+      use_subaccounts: false
+      modifiers:
+        payloads: "Price.json"
+
+  log:
+    add:
+      method: "post"
+      url: "/api/oms/pvt/orders/{{order_id}}/interactions"
+  rules:
+    get:
+      method: "get"
+      url: "https://{{account}}.vtexpayments.com.br/api/pvt/rules"
+
+  email:
+    get:
+      base_uri: 'http://conversationtracker.vtex.com.br'
+      method: "get"
+      url: "/api/pvt/emailMapping/?an={{account}}&alias={{alias}}"
+      modifiers:
+        models:
+          "$": "Email.json"

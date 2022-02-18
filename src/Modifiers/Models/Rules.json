@@ -1,0 +1,6 @@
+{
+    "name":         "name",
+    "system_id":    "paymentSystem.id",
+    "installments": "installmentOptions.installments[0].quantity",
+    "active":       "enabled"
+}

@@ -1,0 +1,5 @@
+{
+    "sku":          "skuId",
+    "stock":        "balance[warehouseId={{warehouse}}].totalQuantity",
+    "warehouse":    "balance[warehouseId={{warehouse}}].warehouseId"
+}

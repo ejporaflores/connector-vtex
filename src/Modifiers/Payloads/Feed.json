@@ -1,0 +1,7 @@
+{
+    "handles": [
+        {% for handle in handles %}
+            "{{handle}}"
+        {% if not loop.last %},{% endif %}
+        {% endfor %}]
+}

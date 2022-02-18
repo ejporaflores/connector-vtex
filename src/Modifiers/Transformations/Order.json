@@ -1,0 +1,12 @@
+{
+    "date":     "str_replace('T', ' ', substr('{{date}}', 0, 19))",
+    "updated":  "str_replace('T', ' ', substr('{{updated}}', 0, 19))",
+    "total":    "number_format(({{total}} + 0) / 100, 2, '.', '')",
+    "subtotal": "number_format(({{subtotal}} + 0) / 100, 2, '.', '')",
+    "shipping": "number_format(({{shipping}} + 0) / 100, 2, '.', '')",
+    "discount": "number_format(({{discount}} + 0) / 100, 2, '.', '')",
+    "taxes":    "number_format(({{taxes}} + 0) / 100, 2, '.', '')",
+    "payment_interest": "number_format(({{payment_value}} - {{payment_reference_value}}) / 100, 2, '.', '')",
+    "payment_value": "number_format(({{payment_value}} + 0) / 100, 2, '.', '')",
+    "payment_reference_value": "number_format(({{payment_reference_value}} + 0) / 100, 2, '.', '')"
+}

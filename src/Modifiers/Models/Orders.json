@@ -1,0 +1,7 @@
+{
+    "order_id": "$.orderId",
+    "total":    "$.totalValue",
+    "date":     "$.creationDate",
+    "status":   "$.status",
+    "handle":   "$.handle"
+}

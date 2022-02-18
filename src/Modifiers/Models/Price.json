@@ -1,0 +1,7 @@
+{
+    "id":               "id",
+    "sku":              "itemId",
+    "price":            "price",
+    "list_price":       "listPrice",
+    "sales_channel":    "salesChannel"
+}

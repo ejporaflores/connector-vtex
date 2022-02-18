@@ -1,0 +1,9 @@
+[
+    {
+        "id":           "{{id}}",
+        "itemId":       "{{sku}}",
+        "price":        "{{price}}",
+        "listPrice":    "{{list_price}}",
+        "salesChannel": "{{sales_channel}}"
+    }
+]

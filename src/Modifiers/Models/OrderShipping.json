@@ -1,0 +1,5 @@
+{
+  "delivery": "selectedSla",
+  "courrier": "deliveryCompany",
+  "warehouse": "$.deliveryIds[0].warehouseId.value"
+}

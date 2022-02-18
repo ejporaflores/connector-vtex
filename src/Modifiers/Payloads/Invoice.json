@@ -1,0 +1,17 @@
+{
+  "orderId": "{{order_id}}",
+  "type": "Output",
+  "invoiceNumber": "{{invoice_id}}",
+  "issuanceDate": "{{date}}",
+  "invoiceValue": "{{total}}",
+  "invoiceUrl": "{{url}}",
+  "items": [
+    {% for item in items %}
+    {
+      "itemId":   "{{id}}",
+      "price":    "{{price}}",
+      "quantity": "{{quantity}}"
+  }{% if not loop.last %},
+    {% endif %}
+    {% endfor %}]
+}

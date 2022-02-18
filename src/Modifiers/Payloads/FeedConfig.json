@@ -1,0 +1,16 @@
+{
+    "filter": {
+        "type": "{{type}}",
+        "status": [
+            {% for state in status %}
+            "{{state}}"
+            {% if not loop.last %},{% endif %}
+            {% endfor %}
+        ],
+        "disableSingleFire": {{disableSingleFire}}
+    },
+    "queue": {
+        "visibilityTimeoutInSeconds": {{visibilityTimeoutInSeconds}},
+        "MessageRetentionPeriodInSeconds": {{MessageRetentionPeriodInSeconds}}
+    }
+}

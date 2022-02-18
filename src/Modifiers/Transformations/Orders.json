@@ -1,0 +1,4 @@
+{
+    "date":     "substr('{{date}}', 0, 10)",
+    "total":    "number_format(({{total}} + 0) / 100, 2, '.', '')"
+}

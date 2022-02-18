@@ -1,0 +1,7 @@
+[
+    {
+        "itemId":       "{{sku}}",
+        "wareHouseId":  "{{warehouse}}",
+        "quantity":     "{{stock}}"
+    }
+]

@@ -1,0 +1,6 @@
+{
+    "price":            "number_format(({{price}} + 0) / 100, 2, '.', '')",
+    "selling_price":    "number_format(({{selling_price}} + 0) / 100, 2, '.', '')",
+    "discount":         "number_format(({{discount}} + 0) / 100, 2, '.', '')",
+    "shipping":         "number_format(({{shipping}} + 0) / 100, 2, '.', '')"
+}
